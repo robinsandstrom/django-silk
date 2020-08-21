@@ -21,8 +21,15 @@ class SQLView(View):
         if request_id:
             silk_request = Request.objects.get(id=request_id)
             query_set = SQLQuery.objects.filter(request=silk_request).order_by('-start_time')
+            query_structure_count = {}
             for q in query_set:
                 q.start_time_relative = q.start_time - silk_request.start_time
+                if q.query_structure not in query_structure_count:
+                    query_structure_count[q.query_structure] = -1
+                query_structure_count[q.query_structure] += 1
+            for q in query_set:
+                q.num_duplicate = query_structure_count[q.query_structure]
+
             page = _page(request, query_set)
             context['silk_request'] = silk_request
         if profile_id:

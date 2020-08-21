@@ -108,6 +108,7 @@
                     <th class="left-aligned">Tables</th>
                     <th class="right-aligned">Num. Joins</th>
                     <th class="right-aligned">Execution Time (ms)</th>
+                    <th class="right-aligned">Num. Duplicates</th>
                 </tr>
                 {% for sql_query in items %}
                     <!-- TODO: Pretty grimy... -->
@@ -124,6 +125,7 @@
                         <td class="left-aligned">{{ sql_query.tables_involved|join:", " }}</td>
                         <td class="right-aligned">{{ sql_query.num_joins }}</td>
                         <td class="right-aligned">{{ sql_query.time_taken | floatformat:6 }}</td>
+                        <td class="right-aligned">{{ sql_query.num_duplicate }}</td>
                     </tr>
                 {% endfor %}
 
